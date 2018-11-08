@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Canvas Drawing HW via JavaScript</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+
+    <body>
+        <canvas id="canvas" width="800" height="500">
+            Sorry, Your browser is rubbish and does not support Canvas.
+        </canvas>
+        
+        <script>
+            var canvas=document.getElementById('canvas');
+            var context=canvas.getContext('2d');
+
+            var radius = 10 ;
+            // context.lineWidth=radius*2;
+            context.fillStyle= 'black';
+            // context.strokeStyle = 'black';
+
+            canvas.addEventListener('mousemove',draw);
+
+            function draw (p){
+                // context.lineTo(p.offsetX,p.offsetY);
+                // context.stroke();
+                // context.beginPath();
+                context.arc(p.offsetX,p.offsetY,radius,0,2*Math.PI);
+                context.fill();
+                context.beginPath();
+                context.moveTo(p.offsetX,p.offsetY);
+            }
+
+            window.addEventListener('keydown', function(e){ 
+                
+                // Color Selection 
+                if(e.keyCode==66){
+                    context.fillStyle="blue";
+                }
+                else if (e.keyCode==71){
+                    context.fillStyle="green";
+                }
+                else if (e.keyCode==82){
+                    context.fillStyle="red";
+                }
+                else if (e.keyCode==89){
+                    context.fillStyle="yellow";
+                }
+
+                // Sizing of Pen                
+                if (e.keyCode==38) {
+                    radius=radius+3;
+                    e.preventDefault();
+                }
+                else if (e.keyCode==40) {
+                    if (radius>6){
+                        radius=radius-3;
+                        }
+                    e.preventDefault();
+                }
+
+                // Clearing Screen 
+                if (e.keyCode==32){
+                    context.clearRect(0,0,canvas.width,canvas.height);
+                    e.preventDefault();
+                } 
+ 
+            });
+
+            // b-66
+            // g-71
+            // r-82
+            // y-89
+            // space bar- 32
+            // up arrow- 38
+            // down arrow- 40
+            //https://css-tricks.com/snippets/javascript/javascript-keycodes/
+
+
+            // charCode-returns unicode char 
+            // keycode -returns the unicode char code of the key that triggered the onkeypress event or onkeydown or onkeyup events 
+        
+        </script>
+
+        <div>
+            <p>Move the pen around the canvas to draw.</p>
+            <p>"b" - change pen color to blue</p>
+            <p>"g" - change pen color to green</p>
+            <p>"r" - change pen color to red</p>
+            <p>"y" - change pen color to yellow</p>
+            <p>"up arrow" - make pen size larger</p>
+            <p>"down arrow" - make pen size smaller</p>
+            <p>"space bar" - clear the canvas (other than the current pen tip)</p>
+          </div>
+    </body>
+
+</html>
